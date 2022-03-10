@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- head definitions go here -->
+    	<style>
+		input[name="direction"] {
+  			height: 100px;
+			width: 100px;
+		}
+	</style>
+    </head>
+    <body>
+        <form method="POST" action="/index" style=" width: 50vw; margin-left : 25vw; margin-top: 10vw">
+		<input type="submit" name="direction" value="forward" style="height: 100px; width: 100px; margin-left: 5vw;">
+		<br></br>
+		<input type="submit" name="direction" value="left">
+		<input type="submit" name="direction" value="stop">
+		<input type="submit" name="direction" value="right">
+		<br></br>
+		<input type="submit" name="direction" value="back" style="margin-left: 5vw">
+		<br></br>
+		<p>Custom range slider:</p>
+  		<input type="range" min="1" max="100" value={{ speed }} class="slider" id="myRange" step="10" name="speed" style="height:300px; width:450px; min-width: 260px; autoHeight: false; scroll-behavior: smooth;">
+		<script> 
+            		const Http = new XMLHttpRequest();
+            		var rangeslider = document.getElementById("myRange");
+            		var current;
+                        
+		        rangeslider.oninput = function() {
+                		current = this.value;
+                		// I've added this call to the server, which sends 'current' value
+                		Http.open('POST', '/index')
+                		Http.send(current)
+            		}
+        </script> 
+
+
+       </form> 
+	<div class="container">
+    		<div class="row">
+        		<div class="col-lg-8  offset-lg-2">
+            			<h3 class="mt-5">Live Streaming</h3>
+            			<img src="{{ url_for('video_feed') }}" width="100%">
+        		</div>
+    		</div>
+	</div>
+
+
+    </body>
+</html>
